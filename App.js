@@ -1,7 +1,7 @@
 
 import React,{useState} from 'react';
 import { StyleSheet, Text, View,Alert,ScrollView} from 'react-native';
-import { TextInput,Button } from 'react-native-paper';
+import { Modal,Button,Portal,Provider } from 'react-native-paper';
 import { createStackNavigator, createAppContainer} from "react-navigation";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
@@ -146,10 +146,15 @@ class LoadingPage extends React.Component {
   render() {
     
     console.log(this.props.navigation.getParam("data", "NO-QR"))
-  return (
-      <Text>Loading</Text>
-     
-
+  return ( <Provider>
+    <Portal>
+    <Modal visible='true' style={{height:20,width:20}}>
+      <View style={{height:100,width:100,alignSelf:'center',justifyContent:'center',backgroundColor:'white',alignContent:'center'}}>
+    <Text>Example</Text>
+    </View>
+  </Modal>
+  </Portal>
+  </Provider>
   );
 }
 
