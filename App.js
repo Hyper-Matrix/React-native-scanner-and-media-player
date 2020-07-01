@@ -148,7 +148,7 @@ class LoadingPage extends React.Component {
     console.log(this.props.navigation.getParam("data", "NO-QR"))
   return ( <Provider>
     <Portal>
-    <Modal visible='true' style={{height:20,width:20}}>
+    <Modal visible='true' style={{height:20,width:20}}> //Modal added, add image in place of text....will work
       <View style={{height:100,width:100,alignSelf:'center',justifyContent:'center',backgroundColor:'white',alignContent:'center'}}>
     <Text>Example</Text>
     </View>
