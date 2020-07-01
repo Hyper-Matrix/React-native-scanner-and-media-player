@@ -1,10 +1,11 @@
-
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,Alert,ScrollView} from 'react-native';
+import { StyleSheet, Text, View,Alert,ScrollView,Dimensions} from 'react-native';
 import { Modal,Button,Portal,Provider } from 'react-native-paper';
 import { createStackNavigator, createAppContainer} from "react-navigation";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
+import {Video} from 'expo-av';
+import { MaterialIcons, Octicons } from '@expo/vector-icons';
  function App(props) {
   return (
     <View style={styles.container}>
@@ -17,7 +18,7 @@ labelStyle={{color:"white",letterSpacing:3}}
     SCANNER
   </Button>
   <Button  mode="contained" 
-   
+     onPress={()=>props.navigation.navigate('playvideo') }
 color="#00BCD4"
 labelStyle={{color:"white",letterSpacing:3}}
  style ={{margin:5, height:50,padding:8,width:360,borderRadius:30,opacity:0.7,borderColor
@@ -114,12 +115,55 @@ else{
 }
 
 
-function Video(){
-  return(
-    <View style={styles.container}>
-   <Text>Hello video</Text>
-  </View>
-  )
+class playvideo  extends React.Component {
+  state = {
+    mute: false,
+    fullScreen: false,
+    shouldPlay: true,
+  }
+  handlePlayAndPause = () => {
+		this.setState(prevState => ({
+			shouldPlay: !prevState.shouldPlay
+		}));
+	}
+
+	handleVolume = () => {
+		this.setState(prevState => ({
+			mute: !prevState.mute,
+		}));
+	}
+  render(){
+    const { width } = Dimensions.get('screen');
+    
+    return(
+      <View style={styles.container}>
+      <View>
+          
+          <Video
+            source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+            shouldPlay={this.state.shouldPlay}
+            resizeMode="contain"
+            style={{ width, height: 300 }}
+            isMuted={this.state.mute}
+          />
+          <View style={styles.controlBar}>
+            <MaterialIcons 
+              name={this.state.mute ? "volume-mute" : "volume-up"}
+              size={45} 
+              color="white" 
+              onPress={this.handleVolume} 
+            />
+            <MaterialIcons 
+              name={this.state.shouldPlay ? "pause" : "play-arrow"} 
+              size={45} 
+              color="white" 
+              onPress={this.handlePlayAndPause} 
+            />
+          </View>
+        </View>
+    </View>
+    )
+  }
 }
 function Decode(props){
   return(
@@ -148,7 +192,7 @@ class LoadingPage extends React.Component {
     console.log(this.props.navigation.getParam("data", "NO-QR"))
   return ( <Provider>
     <Portal>
-    <Modal visible='true' style={{height:20,width:20}}> //Modal added, add image in place of text....will work
+    <Modal visible='true' style={{height:20,width:20}}>
       <View style={{height:100,width:100,alignSelf:'center',justifyContent:'center',backgroundColor:'white',alignContent:'center'}}>
     <Text>Example</Text>
     </View>
@@ -164,7 +208,7 @@ const Appnav = createStackNavigator(
   {
     App:App,
     Scanner:Scanner,
-    Video:Video,
+    playvideo:playvideo,
     Decode:Decode,
     LoadingPage:LoadingPage
   },{
@@ -197,14 +241,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.6)',
     width:350,
     marginTop:20,
-    color:"white",
-   
-    
+    color:"white", 
   },
   textInput: {
   height: 40,
   borderColor: 'black', 
   borderWidth: 1,
   margin: 20
+},
+controlBar: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 45,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  
 }
 });
