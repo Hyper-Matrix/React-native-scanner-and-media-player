@@ -6,6 +6,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 import {Video} from 'expo-av';
 import { MaterialIcons, Octicons } from '@expo/vector-icons';
+//Home
  function App(props) {
   return (
     <View style={styles.container}>
@@ -18,7 +19,7 @@ labelStyle={{color:"white",letterSpacing:3}}
     SCANNER
   </Button>
   <Button  mode="contained" 
-     onPress={()=>props.navigation.navigate('playvideo') }
+     //onPress={()=>props.navigation.navigate('playvideo') }
 color="#00BCD4"
 labelStyle={{color:"white",letterSpacing:3}}
  style ={{margin:5, height:50,padding:8,width:360,borderRadius:30,opacity:0.7,borderColor
@@ -29,6 +30,7 @@ labelStyle={{color:"white",letterSpacing:3}}
     </View>
   );
 }
+//Scanner
 function Scanner(props)
 {const[hasCameraPermission,sethasCameraPermission ]=useState(null)
   const[isScanned,setisScanned ]=useState(false)
@@ -115,56 +117,7 @@ else{
 }
 
 
-class playvideo  extends React.Component {
-  state = {
-    mute: false,
-    fullScreen: false,
-    shouldPlay: true,
-  }
-  handlePlayAndPause = () => {
-		this.setState(prevState => ({
-			shouldPlay: !prevState.shouldPlay
-		}));
-	}
-
-	handleVolume = () => {
-		this.setState(prevState => ({
-			mute: !prevState.mute,
-		}));
-	}
-  render(){
-    const { width } = Dimensions.get('screen');
-    
-    return(
-      <View style={styles.container}>
-      <View>
-          
-          <Video
-            source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-            shouldPlay={this.state.shouldPlay}
-            resizeMode="contain"
-            style={{ width, height: 300 }}
-            isMuted={this.state.mute}
-          />
-          <View style={styles.controlBar}>
-            <MaterialIcons 
-              name={this.state.mute ? "volume-mute" : "volume-up"}
-              size={45} 
-              color="white" 
-              onPress={this.handleVolume} 
-            />
-            <MaterialIcons 
-              name={this.state.shouldPlay ? "pause" : "play-arrow"} 
-              size={45} 
-              color="white" 
-              onPress={this.handlePlayAndPause} 
-            />
-          </View>
-        </View>
-    </View>
-    )
-  }
-}
+//component to receive scanner data
 function Decode(props){
   return(
     <View style={styles.container}>
@@ -172,6 +125,7 @@ function Decode(props){
   </View>
   )
 }
+//Loading screen between scanner and result page
 class LoadingPage extends React.Component {
   componentDidMount(){const data =this.props.navigation.getParam("data", "NO-QR")
        // Start counting when the page is loaded
