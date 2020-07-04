@@ -118,7 +118,7 @@ else{
 }
 
 
-function playvideo(){
+function playvideo(props){
 
 
       const isPortrait = () => {
@@ -146,7 +146,7 @@ function playvideo(){
       <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'black',}}>
     < Ionicons name="md-close" size={32} color="white" 
           style={{alignSelf:'flex-end',marginTop:50,marginRight:20}}
-          onPress={()=> this.props
+          onPress={()=> props
           .navigation
           .dispatch(StackActions.reset({
           index: 0,
@@ -167,7 +167,7 @@ function playvideo(){
           <View style={{backgroundColor:'black',flex:1}}>
           <Ionicons name="md-close" size={60} color="white" 
           style={{alignSelf:'flex-end',marginTop:30,marginRight:30}}
-          onPress={()=> this.props
+          onPress={()=> props
           .navigation
           .dispatch(StackActions.reset({
           index: 0,
@@ -200,7 +200,7 @@ function playvideo(){
           <View style={{backgroundColor:'black',flex:1}}>
           <Ionicons name="md-close" size={60} color="white" 
           style={{alignSelf:'flex-end',marginTop:30,marginRight:50}}
-          onPress={()=> this.props
+          onPress={()=> props
           .navigation
           .dispatch(StackActions.reset({
           index: 0,
