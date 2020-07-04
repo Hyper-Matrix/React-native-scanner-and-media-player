@@ -175,7 +175,7 @@ return(
 );
 }
 else{
-  0
+  
   if (this.state.orientation === 'portrait') {
     return (
       <View style={{backgroundColor:'black',flex:1}}>
